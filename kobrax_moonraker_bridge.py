@@ -3411,7 +3411,7 @@ class KobraXBridge:
                 "square_corner_velocity":  20.0,
             },
             "extruder": {
-                "nozzle_diameter":    0.4,
+                "nozzle_diameter":    float(getattr(self._args, "nozzle_diameter", 0.4) or 0.4),
                 "filament_diameter":  1.75,
                 "sensor_type":        "ATC Semitec 104GT-2",
                 "min_temp":           0,
@@ -7285,6 +7285,8 @@ def _build_per_printer_args(base_args, p: dict):
     a.model_id   = p.get("model_id")  or a.mode_id
     a.device_id  = p.get("device_id") or base_args.device_id
     a.port       = int(p.get("http_port") or base_args.port)
+    if p.get("nozzle_diameter"):
+        a.nozzle_diameter = float(p["nozzle_diameter"])
     return a
 
 
@@ -7442,6 +7444,9 @@ def main():
                         help="Printer poll interval in seconds")
     parser.add_argument("--verbose-http-log", type=int, default=env_loader.VERBOSE_HTTP_LOG,
                         help="Log every HTTP request (aiohttp access log)")
+    parser.add_argument("--nozzle-diameter", type=float, default=env_loader.NOZZLE_DIAMETER,
+                        help="Mounted nozzle diameter in mm; G-code sliced for a "
+                             "different nozzle is blocked")
 
     parser.add_argument("--host",            default="0.0.0.0",
                         help="Bind address for the bridge server")

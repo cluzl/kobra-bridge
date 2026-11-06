@@ -17,6 +17,9 @@ vibration_compensation = 0
 camera_on_print = 0
 web_upload_warning = 1
 print_start_dialog = 1
+# Mounted nozzle diameter; G-code sliced for a different nozzle is blocked.
+# May also be set per printer in a [printer_N] section.
+nozzle_diameter = 0.4
 
 [bridge]
 poll_interval = 3

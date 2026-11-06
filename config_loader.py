@@ -65,6 +65,7 @@ CONFIG_ENV_MAPPING = {
     "CAMERA_ON_PRINT":          (CONFIG_SECTION_PRINT,   "camera_on_print"),
     "WEB_UPLOAD_WARNING":   (CONFIG_SECTION_PRINT,   "web_upload_warning"),
     "PRINT_START_DIALOG":   (CONFIG_SECTION_PRINT,   "print_start_dialog"),
+    "NOZZLE_DIAMETER":      (CONFIG_SECTION_PRINT,   "nozzle_diameter"),
     "BRIDGE_PRINTER_NAME":  (CONFIG_SECTION_BRIDGE,  "printer_name"),
     "BRIDGE_HOST_IP":       (CONFIG_SECTION_BRIDGE,  "host_ip"),
     "POLL_INTERVAL":        (CONFIG_SECTION_BRIDGE,  "poll_interval"),
@@ -167,7 +168,7 @@ def list_printers() -> list[dict]:
 
     Each section may contain the following keys:
       name, printer_ip, mqtt_port, username, password, mode_id, device_id,
-      bridge_url, default_ams_slot, auto_leveling
+      bridge_url, default_ams_slot, auto_leveling, nozzle_diameter
 
     Returns an empty list when no [printer_N] sections exist
     (Single-Printer-Betrieb via [connection]).
@@ -454,6 +455,7 @@ VIBRATION_COMPENSATION  = int(get("VIBRATION_COMPENSATION", "0"))
 CAMERA_ON_PRINT         = int(get("CAMERA_ON_PRINT",        "0"))
 WEB_UPLOAD_WARNING = int(get("WEB_UPLOAD_WARNING", "1"))
 PRINT_START_DIALOG = int(get("PRINT_START_DIALOG", get("FILE_READY_DIALOG", "1")))
+NOZZLE_DIAMETER    = float(get("NOZZLE_DIAMETER", "0.4"))
 SPOOLMAN_SERVER    = get("SPOOLMAN_SERVER",    "")
 SPOOLMAN_SYNC_RATE = int(get("SPOOLMAN_SYNC_RATE", "0"))
 BRIDGE_HOST_IP     = get("BRIDGE_HOST_IP",     "")
