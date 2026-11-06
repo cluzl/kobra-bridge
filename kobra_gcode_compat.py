@@ -350,6 +350,8 @@ def check_compatibility(facts: GCodeFacts, target: KobraModel,
         reasons.append("relative motion begins before a known absolute position")
     if not facts.nozzle_mm or abs(facts.nozzle_mm - float(target_nozzle_mm)) > 0.001:
         reasons.append(f"nozzle {facts.nozzle_mm:g} mm does not match target {target_nozzle_mm:g} mm")
+    if not target.supports_nozzle(target_nozzle_mm):
+        reasons.append(f"configured target nozzle {float(target_nozzle_mm):g} mm is not supported by {target.name}")
     bx, by, bz = target.build_volume_mm
     lo, hi = facts.bounds_min, facts.bounds_max
     if lo[0] < 0 or lo[1] < 0 or lo[2] < 0 or hi[0] > bx or hi[1] > by or hi[2] > bz:

@@ -102,6 +102,11 @@ assert m.check_compatibility(inspect(fixture(maxx=255,maxy=255)),s1,.4,4).decisi
 assert m.check_compatibility(inspect(fixture(model='Anycubic Kobra S1 Max',size=350,maxx=300,maxy=300)),x,.4,4).decision=='blocked'
 assert 'build volume' in ' '.join(m.check_compatibility(inspect(fixture(model='Anycubic Kobra S1 Max',size=350,maxx=300,maxy=300)),x,.4,4).reasons)
 assert m.check_compatibility(inspect(fixture(nozzle=.6)),x,.4,4).decision=='blocked'
+# A configured 0.6 mm target nozzle accepts files sliced for 0.6 mm.
+assert m.check_compatibility(inspect(fixture(nozzle=.6)),x,.6,4).decision=='native'
+# A configured target nozzle the model does not offer fails closed.
+r_nozzle=m.check_compatibility(f,x,.35,4)
+assert r_nozzle.decision=='blocked' and 'not supported' in ' '.join(r_nozzle.reasons),r_nozzle
 assert m.check_compatibility(inspect(fixture(model='Anycubic Kobra S1 Max',size=350,chamber=60)),x,.4,4).decision=='blocked'
 assert m.check_compatibility(inspect(fixture(tools=(0,1))),smax,.4,4).decision=='blocked','cross-model multicolour choreography is not safely rewritable'
 assert m.check_compatibility(inspect(fixture(model='Unknown')),x,.4,4).decision=='blocked'
